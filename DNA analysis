@@ -1,0 +1,62 @@
+def count_dna(dna):  # count number of bases in dna
+
+    for char in dna:
+        if char == 'A':
+            A = str(dna.count(char))
+        elif char == 'T' or char == 'U':
+            T = str(dna.count(char))
+        elif char == 'G':
+            G = str(dna.count(char))
+        elif char == 'C':
+            C = str(dna.count(char))
+    print('A= ' + A + '\tT= ' + T + '\tG= ' + G + '\tC= ' + C)
+    return A, T, G, C
+
+
+def rna(dna):  # Transcribing dna to rna
+
+    result = []
+    for i in dna:
+        if i == 'T':
+            i = 'U'
+        result.append(i)
+    return "".join(result)
+
+
+def protein(seq=''):
+    seq = rna(seq)
+    protein = ''
+
+    table = {"UUU": "F", "CUU": "L", "AUU": "I", "GUU": "V",
+             "UUC": "F", "CUC": "L", "AUC": "I", "GUC": "V",
+             "UUA": "L", "CUA": "L", "AUA": "I", "GUA": "V",
+             "UUG": "L", "CUG": "L", "AUG": "M", "GUG": "V",
+             "UCU": "S", "CCU": "P", "ACU": "T", "GCU": "A",
+             "UCC": "S", "CCC": "P", "ACC": "T", "GCC": "A",
+             "UCA": "S", "CCA": "P", "ACA": "T", "GCA": "A",
+             "UCG": "S", "CCG": "P", "ACG": "T", "GCG": "A",
+             "UAU": "Y", "CAU": "H", "AAU": "N", "GAU": "D",
+             "UAC": "Y", "CAC": "H", "AAC": "N", "GAC": "D",
+             "UAA": "STOP", "CAA": "Q", "AAA": "K", "GAA": "E",
+             "UAG": "STOP", "CAG": "Q", "AAG": "K", "GAG": "E",
+             "UGU": "C", "CGU": "R", "AGU": "S", "GGU": "G",
+             "UGC": "C", "CGC": "R", "AGC": "S", "GGC": "G",
+             "UGA": "STOP", "CGA": "R", "AGA": "R", "GGA": "G",
+             "UGG": "W", "CGG": "R", "AGG": "R", "GGG": "G"
+             }
+
+    for i in range(0, len(seq), 3):
+        if table[seq[i:i + 3]] == "STOP":
+            break
+        protein += table[seq[i:i + 3]]
+    print(protein)
+
+
+file = open(input('Enter file path: '), 'r')
+
+dna = file.read()
+#If there is any mistake plz help me!
+print('the DNA seq. : '+dna)
+print('counting DNA bases: '+count_dna(dna))
+print('Transcribing dna to rna: '+rna(dna))
+print('translating RNA to protein: '+ str(protein(dna)))
